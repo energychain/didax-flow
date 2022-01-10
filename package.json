@@ -1,0 +1,37 @@
+{
+  "name": "didax-flow",
+  "version": "0.5.0",
+  "description": "Identity based Asset Exchange - Event Processor",
+  "main": "lib.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/energychain/didax-flow.git"
+  },
+  "keywords": [
+    "asset",
+    "exchange",
+    "flow",
+    "did",
+    "identity"
+  ],
+  "author": "STROMDAO GmbH <dev@stromdao.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/energychain/didax-flow/issues"
+  },
+  "homepage": "https://github.com/energychain/didax-flow#readme",
+  "dependencies": {
+    "did-resolver": "^3.1.5",
+    "didax-core": "^0.5.1",
+    "eth-crypto": "^2.1.0",
+    "ethers": "^5.5.3",
+    "ethr-did": "^2.1.5",
+    "ethr-did-resolver": "^5.0.2"
+  },
+  "devDependencies": {
+    "mocha": "^9.1.3"
+  }
+}
