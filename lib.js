@@ -9,6 +9,7 @@ const EthCrypto = require('eth-crypto');
 class DidaxFlow extends EventEmitter {
  constructor(config) {
    super();
+   this.core = new DidaxCore(config);
    if((typeof config == "undefined")||(config == null)) {
      config = {};
    }
@@ -39,13 +40,15 @@ class DidaxFlow extends EventEmitter {
 
      // validate based on given usecase
      try {
-
+        await this.core.addOffer(did.payload);
      } catch(e) {
-       console.log('Validation of DID',e);
+      //  console.log('Validation of DID',e);
      }
      return did;
    }
 
+   this.offers = this.core.offers;
+   
    this.toJWT = async function(object) {
      if((typeof object !== 'object')||(object == null)) {
        throw new Error('toJWT expects object');

@@ -88,7 +88,67 @@ describe('Core', function() {
     let did = await lib.processDID(jwt);
     assert.equal(did.payload.iss, lib.id); // Should be Identity of our Lib
     assert.equal(did.issuer, lib.id);
-    console.log(did);
-
+    assert.equal(lib.offers.length, 1);
   });
+  it('addOffer - invalid Schema', async () => {
+    const lib = new Lib();
+    const Offer = function() {
+      return {
+        bid: {
+            minQuantity:1,
+            totalQuantity:1,
+            definition: {
+              schema:"./test/schema.apple.json"
+            }
+        },
+        ask: {
+          minQuantity:1,
+          definition: {
+            schema:"./test/schema.pear.json",
+            requirement:"./test/schema.pear.json"
+          }
+        },
+        ratio:1,
+        issuer:"1337",
+        validUntil:new Date().getTime() + 86400000
+      }
+    }
+    let jwt = await lib.toJWT(Offer());
+    let did = await lib.processDID(jwt);
+    assert.equal(did.payload.iss, lib.id); // Should be Identity of our Lib
+    assert.equal(did.issuer, lib.id);
+    assert.equal(lib.offers.length, 0);
+  });
+  it('addOffer - manipulated JWT', async () => {
+    const lib = new Lib();
+    const Offer = function() {
+      return {
+        bid: {
+            minQuantity:1,
+            totalQuantity:1,
+            definition: {
+              schema:"./test/schema.apple.json"
+            }
+        },
+        ask: {
+          minQuantity:1,
+          definition: {
+            schema:"./test/schema.pear.json",
+            requirement:"./test/schema.pear.json"
+          }
+        },
+        ratio:1,
+        issuer:"1337",
+        validUntil:new Date().getTime() + 86400000
+      }
+    }
+    let jwt = await lib.toJWT(Offer());
+    jwt = jwt + 'A';
+    await assert.rejects(
+      async () => {
+        let did = await lib.processDID(jwt);
+      }
+    );
+  });
+
 });
