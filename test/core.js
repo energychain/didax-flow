@@ -2,6 +2,7 @@ const Lib = require("../lib.js");
 var assert = require('assert');
 
 describe('Core', function() {
+  this.timeout(5000);
   it('input JWT', async () => {
     const lib = new Lib();
 
