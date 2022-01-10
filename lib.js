@@ -37,7 +37,8 @@ class DidaxFlow extends EventEmitter {
 
      let did = await ethrDid.verifyJWT(jwt, didResolver);
      did.payload.issuer = did.issuer; // overwrite with real Resolution
-
+     did.payload.id = ethers.utils.id(jwt);
+    
      // validate based on given usecase
      try {
         await this.core.addOffer(did.payload);
@@ -48,7 +49,7 @@ class DidaxFlow extends EventEmitter {
    }
 
    this.offers = this.core.offers;
-   
+
    this.toJWT = async function(object) {
      if((typeof object !== 'object')||(object == null)) {
        throw new Error('toJWT expects object');

@@ -89,6 +89,7 @@ describe('Core', function() {
     let did = await lib.processDID(jwt);
     assert.equal(did.payload.iss, lib.id); // Should be Identity of our Lib
     assert.equal(did.issuer, lib.id);
+    assert.equal(typeof did.payload.id, 'string');
     assert.equal(lib.offers.length, 1);
   });
   it('addOffer - invalid Schema', async () => {
